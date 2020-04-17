@@ -1,25 +1,35 @@
 pipeline {
+
     agent any
+    tools {
+        maven 'maveen' 
+        //jdk 'jdk'
+    }
     stages {
-        stage('SonarQube analysis 1') {
+        stage('Compile stage') {
             steps {
-                sh 'mvn clean package org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
-            }
-        }
-        stage("Quality Gate 1") {
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-        stage('SonarQube analysis 2') {
-            steps {
-                sh 'gradle sonarqube'
-            }
-        }
-        stage("Quality Gate 2") {
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
+                sh "mvn clean compile" 
         }
     }
+
+         stage('testing stage') {
+             steps {
+                sh "mvn test"
+        }
+    }
+
+          stage('Installing stage') {
+              steps {
+                sh "mvn install"
+        }
+    }    
+          stage('deployment stage') {
+              steps {
+                //sh "mvn deploy:deploy"
+                echo 'Hello'
+        }
+    }
+
+  }
+
 }
