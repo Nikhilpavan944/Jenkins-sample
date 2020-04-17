@@ -17,12 +17,9 @@ pipeline {
                 sh "mvn test"
         }
     }
-        stage('build && SonarQube analysis') {
-            def sqScannerMsBuildHome = tool 'Scanner for MSBuild 4.6'
-            withSonarQubeEnv('sonar') {
-              bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:myKey"
-              bat 'MSBuild.exe /t:Rebuild'
-              bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
+        stage('SonarQube analysis') {
+          withSonarQubeEnv(credentialsId: 'f225455e-ea59-40fa-8af7-08176e86507a', installationName: 'My SonarQube Server') { // You can override the credential to be used
+            sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
         }
     }
 
