@@ -18,13 +18,11 @@ pipeline {
         }
     }
         stage('build && SonarQube analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    // Optionally use a Maven environment you've configured already
-                    withMaven(maven:'maveen') {
-                        sh 'mvn clean package sonar:sonar'
-                }
-            }
+            def sqScannerMsBuildHome = tool 'Scanner for MSBuild 4.6'
+            withSonarQubeEnv('sonar') {
+              bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:myKey"
+              bat 'MSBuild.exe /t:Rebuild'
+              bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
         }
     }
 
