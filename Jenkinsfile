@@ -17,6 +17,16 @@ pipeline {
                 sh "mvn test"
         }
     }
+         stage('build && SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('sonar') {
+                    // Optionally use a Maven environment you've configured already
+                    withMaven(maven:'maveen') {
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                }
+            }
+        }
 
           stage('Installing stage') {
               steps {
