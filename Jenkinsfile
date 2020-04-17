@@ -16,7 +16,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar') {
                     // Optionally use a Maven environment you've configured already
-                    //withMaven(maven:'maveen') {
+                    withMaven(maven:'maveen') {
                         sh 'mvn clean package sonar:sonar'
                     }
                 }
