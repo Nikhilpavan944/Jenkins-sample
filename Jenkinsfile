@@ -21,13 +21,12 @@ pipeline {
           stage('Installing stage') {
               steps {
                 sh "mvn install"
-                //echo 'Hello'
         }
     }    
           stage('deployment stage') {
               steps {
-                sh "mvn deploy:deploy"
-                //echo 'Hello'
+                //sh "mvn deploy:deploy"
+                echo 'Hello'
         }
     }
 
