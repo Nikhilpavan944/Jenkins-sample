@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('SonarQube analysis 1') {
             steps {
-                sh 'mvn clean package sonar:sonar'
+                sh 'mvn clean package org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
             }
         }
         stage("Quality Gate 1") {
